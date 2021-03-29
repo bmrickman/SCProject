@@ -1,7 +1,7 @@
 Setup Guide:
 
 1. Create folder  ~/SCProject
-2. Clone the git repo: git clone https://github.com/bmrickman/SCProject ~/SCProject2
+2. Clone the git repo: git clone https://github.com/bmrickman/SCProject ~/SCProject
 3. use environment.yml to create a conda environment
     1. Letting PyCharm create you conda environment (so pycharm calls the correct python with dependencies when using IDE): https://www.jetbrains.com/help/pycharm/conda-support-creating-conda-virtual-environment.html#conda-requirements
     2. Or Create a Conda environment manually: conda env create -f environment.yml
