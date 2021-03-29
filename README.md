@@ -38,23 +38,23 @@ https://www.serverlab.ca/tutorials/containers/docker/how-to-run-mysql-server-8-i
 
 Project Overview:
 the goal of the project is to support the following workflow:
-	1. Simulate Supply Chain structure
-	2. Simulate historical data for said configuration
-	3. Infer structure of sales/production/build/etc based on historical data using ML/Stats
-	4. document model performance (both runtime and prediction accuracy)
+1. Simulate Supply Chain structure
+2. Simulate historical data for said configuration
+3. Infer structure of sales/production/build/etc based on historical data using ML/Stats
+4. document model performance (both runtime and prediction accuracy)
 
 
 Project Directory Overview:
-	db.py                     - module for connecting to database
-	mysql_cfg.py              - database connection configuration
-	tests                     - test files 
-	create_supply_chain.py    - creates a supply chain 
-	environment.yml           - conda environment file
-        dummy_db_init_script.sql  - SQL script that is passed to DB by create_supply_chain.py
+db.py                     - module for connecting to database
+mysql_cfg.py              - database connection configuration
+tests                     - test files 
+create_supply_chain.py    - creates a supply chain 
+environment.yml           - conda environment file
+dummy_db_init_script.sql  - SQL script that is passed to DB by create_supply_chain.py
 
 TODO:
-consider permissions/security issues
-wrap python code in docker container
-improve supply chain generation logic
-finish sales generation logic
-build documentation on sales generation logic
+1.consider permissions/security issues
+2.wrap python code in docker container
+3.improve supply chain generation logic
+4.finish sales generation logic
+5.build documentation on sales generation logic
