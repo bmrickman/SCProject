@@ -50,7 +50,7 @@ Project Directory Overview:
 	tests                     - test files 
 	create_supply_chain.py    - creates a supply chain 
 	environment.yml           - conda environment file
-
+        dummy_db_init_script.sql  - SQL script that is passed to DB by create_supply_chain.py
 
 TODO:
 consider permissions/security issues
