@@ -46,15 +46,24 @@ the goal of the project is to support the following workflow:
 
 Project Directory Overview:
 db.py                     - module for connecting to database
+
 mysql_cfg.py              - database connection configuration
+
 tests                     - test files 
+
 create_supply_chain.py    - creates a supply chain 
+
 environment.yml           - conda environment file
+
 dummy_db_init_script.sql  - SQL script that is passed to DB by create_supply_chain.py
 
 TODO:
 1.consider permissions/security issues
+
 2.wrap python code in docker container
+
 3.improve supply chain generation logic
+
 4.finish sales generation logic
+
 5.build documentation on sales generation logic
