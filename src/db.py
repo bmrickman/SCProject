@@ -61,6 +61,7 @@ class db:
     @try_connect
     def executemany(self, stmt, rows):
         self.cursor.executemany(stmt, rows)
+        self.cnx.commit()
 
     def rowListToRowDict(self):
         columns = [d[0] for d in self.cursor.description]

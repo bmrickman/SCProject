@@ -78,9 +78,17 @@ BEGIN
 
 	DROP TABLE IF EXISTS sc.ship_routes;
 	CREATE TABLE sc.ship_routes(
-	ship_route_id INT(11),
-	from_id INT(11),
-	to_id INT(11)
+	    ship_route_id INT(11),
+	    from_id       INT(11),
+	    to_id         INT(11)
+	);
+
+	DROP TABLE IF EXISTS sc.sales;
+	CREATE TABLE sc.sales(
+	    product_id  INT(11),
+	    location_id INT(11),
+	    sale_date   DATE,
+	    sale_amt    INT(11)
 	);
 
 

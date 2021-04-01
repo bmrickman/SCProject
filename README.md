@@ -59,3 +59,4 @@ TODO:
 2. wrap python code in docker container
 3. finish sales generation logic
 4. build documentation on sales generation logic
+5. Test executemany against individual executions
