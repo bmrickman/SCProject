@@ -2,7 +2,6 @@ DROP DATABASE IF EXISTS sc;
 CREATE DATABASE sc;
 USE sc;
 
-
 CREATE PROCEDURE sc.log(
 	IN status   VARCHAR(32),
 	IN activity VARCHAR(128)
@@ -19,7 +18,6 @@ BEGIN
 END;
 
 
-
 CREATE PROCEDURE sc.build_shallow_vg_sc(
 	IN nproducts        		 INT(11),
 	IN nsales_locations 		 INT(11),
@@ -31,6 +29,7 @@ BEGIN
 	DECLARE fin_prod_id INT(11);
 	DECLARE build_id_1 INT(11);
 	DECLARE build_id_2 INT(11);
+	DECLARE build_id_3  INT(11);
 	DECLARE curmax     INT(11);
 
 	CALL sc.log('BEGIN', 'build_shallow_vg_sc');
@@ -123,7 +122,7 @@ BEGIN
     CALL sc.log('BEGIN', 'BUILD SHIP ROUTES');
 
     INSERT INTO sc.ship_routes(ship_route_id, from_id, to_id)
-    SELECT sloc.location_id*bbloc.location_id, sloc.location_id, bbloc.location_id
+    SELECT sloc.location_id*bbloc.location_id, bbloc.location_id, sloc.location_id
       FROM sc.locations sloc,
       	   sc.locations bbloc
      WHERE sloc.location_type = 'S'
@@ -137,20 +136,23 @@ BEGIN
 	CALL sc.log('BEGIN', 'BUILD PRODUCTS');
 
 	SET loopInd  = 1;
-	WHILE loopInd < nproducts DO
+	WHILE loopInd <= nproducts DO
 
-		SET fin_prod_id = 3*loopInd;
-		SET build_id_1  = 3*loopInd-1;
-		SET build_id_2  = 3*loopInd-2;
+		SET fin_prod_id = 4*loopInd-3;
+		SET build_id_1  = 4*loopInd-2;
+		SET build_id_2  = 4*loopInd-1;
+		SET build_id_3  = 4*loopInd;
 
 		INSERT INTO sc.products(product_id, product_name, is_buyable, is_sellable, is_buildable)
-		VALUES (fin_prod_id, CONCAT('Build Item 1 for Product ',fin_prod_id), 0, 1, 0),
-		       (build_id_1,  CONCAT('Build Item 1 for Product ',build_id_1),  1, 0, 1),
-		       (build_id_2,  CONCAT('Build Item 1 for Product ',build_id_2),  1, 0, 1);
+		VALUES (fin_prod_id, CONCAT('Game ',              fin_prod_id), 0, 1, 1),
+		       (build_id_1,  CONCAT('Sleeve for Product ',fin_prod_id),  1, 0, 0),
+		       (build_id_2,  CONCAT('Disk for Product ',fin_prod_id),    1, 0, 0),
+		       (build_id_3,  CONCAT('Game for Product ',fin_prod_id),    1, 0, 0);
 
 		INSERT INTO sc.product_construction(build_id,to_product_id,from_product_id, amt)
 		VALUES (loopInd, fin_prod_id, build_id_1, 1),
-		       (loopInd, fin_prod_id, build_id_2, 1);
+		       (loopInd, fin_prod_id, build_id_2, 1),
+		       (loopInd, fin_prod_id, build_id_3, 1);
 
 
 	    SET loopInd = loopInd + 1;
@@ -170,7 +172,8 @@ BEGIN
 	  	   sc.products,
 	  	   (SELECT @l_seq := 0) l_seq
 	 WHERE location_type        = 'S'
-	   AND products.is_sellable = TRUE;
+	   AND products.is_sellable = TRUE
+	 ORDER BY product_id ASC, location_id ASC;
 
 	SELECT MAX(id)
       INTO curmax
@@ -183,7 +186,8 @@ BEGIN
 	  	   sc.products,
 	  	   (SELECT @l_seq := curmax) l_seq
 	 WHERE location_type        = 'BB'
-	   AND products.is_buildable = TRUE;
+	   AND products.is_buildable = TRUE
+	  ORDER BY product_id ASC, location_id ASC;
 
 	CALL sc.log('END','BUILD PROD LOC');
     CALL sc.log('END', 'build_shallow_vg_sc');
